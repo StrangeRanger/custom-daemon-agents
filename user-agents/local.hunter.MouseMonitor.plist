@@ -4,8 +4,11 @@
 <dict>
 	<key>Label</key>
 	<string>local.hunter.MouseMonitor</string>
-	<key>Program</key>
-	<string>/Users/hunter/.agent-scripts/mouse-monitor.bash</string>
+    <key>Program</key>
+    <array>
+		<string>/usr/bin/osascript</string>
+		<string>/Users/hunter/.agent-scripts/mouse-monitor.scpt</string>
+	</array>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StartInterval</key>

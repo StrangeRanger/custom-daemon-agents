@@ -6,8 +6,11 @@
 	<false/>
 	<key>Label</key>
 	<string>local.hunter.LogitechMonitor</string>
-	<key>Program</key>
-	<string>/Users/hunter/.agent-scripts/logitech-monitor.bash</string>
+    <key>Program</key>
+    <array>
+		<string>/usr/bin/osascript</string>
+		<string>/Users/hunter/.agent-scripts/logitech-monitor.scpt</string>
+	</array>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StartInterval</key>
