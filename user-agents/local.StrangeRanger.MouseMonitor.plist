@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>local.hunter.MouseMonitor</string>
+	<string>local.StrangeRanger.MouseMonitor</string>
     <key>Program</key>
     <array>
 		<string>/usr/bin/osascript</string>

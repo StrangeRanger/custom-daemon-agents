@@ -5,7 +5,7 @@
 	<key>Disabled</key>
 	<false/>
 	<key>Label</key>
-	<string>local.hunter.LogitechMonitor</string>
+	<string>local.StrangeRanger.LogitechMonitor</string>
     <key>Program</key>
     <array>
 		<string>/usr/bin/osascript</string>
