@@ -1,3 +1,14 @@
+-- Description:
+-- 	Check if a specific USB device is connected, then launch the Mos application if the
+--  device is connected and the app is not already running.
+-- Purpose:
+--  Mos makes it possible to reverse the direction of the scroll wheel on a mouse.
+--  Because I only want the application to run when I'm using my mouse, I use this
+--  script + an agent to launch the application when the mouse is connected.
+-- Note:
+--  The product ID is specific to my mouse. If you want to use this script, you need to
+--  replace the product ID with the product ID of your mouse.
+
 set vendorID to "Product ID: 0xc53f"
 set appName to "Mos"
 set appPath to "/Applications/Mos.app"
