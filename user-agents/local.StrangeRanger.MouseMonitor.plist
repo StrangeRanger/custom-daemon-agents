@@ -2,12 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Disabled</key>
-	<false/>
 	<key>Label</key>
-	<string>local.hunter.LogitechMonitor</string>
-	<key>Program</key>
-	<string>/Users/hunter/.agent-scripts/logitech-monitor.bash</string>
+	<string>local.StrangeRanger.MouseMonitor</string>
+    <key>Program</key>
+    <array>
+		<string>/usr/bin/osascript</string>
+		<string>/Users/hunter/.agent-scripts/mouse-monitor.scpt</string>
+	</array>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StartInterval</key>
