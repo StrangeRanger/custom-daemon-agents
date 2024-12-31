@@ -1,5 +1,7 @@
 # Custom Daemon Agents
 
+[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://wiki.hthompson.dev/en/project-tracker)
+
 This repository contains the source code for custom Daemons and Agents created for macOS.
 
 ## User Agents
