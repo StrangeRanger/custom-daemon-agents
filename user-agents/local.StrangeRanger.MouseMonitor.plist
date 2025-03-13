@@ -6,7 +6,7 @@
     <false/>
     <key>Label</key>
 	<string>local.StrangeRanger.MouseMonitor</string>
-    <key>Program</key>
+    <key>ProgramArguments</key>
     <array>
 		<string>/usr/bin/osascript</string>
 		<string>/Users/hunter/.agent-scripts/mouse-monitor.scpt</string>
@@ -17,3 +17,4 @@
 	<integer>20</integer>
 </dict>
 </plist>
+
