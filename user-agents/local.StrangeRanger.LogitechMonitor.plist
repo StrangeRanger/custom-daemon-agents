@@ -6,8 +6,8 @@
 	<false/>
 	<key>Label</key>
 	<string>local.StrangeRanger.LogitechMonitor</string>
-    <key>Program</key>
-    <array>
+	<key>ProgramArguments</key>
+	<array>
 		<string>/usr/bin/osascript</string>
 		<string>/Users/hunter/.agent-scripts/logitech-monitor.scpt</string>
 	</array>
@@ -17,3 +17,4 @@
 	<integer>20</integer>
 </dict>
 </plist>
+
