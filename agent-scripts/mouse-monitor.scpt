@@ -9,9 +9,9 @@
 --  The product ID is specific to my mouse. If you want to use this script, you need to
 --  replace the product ID with the product ID of your mouse.
 
-set vendorID to "Product ID: 0xc53f"
-set appName to "Mos"
-set appPath to "/Applications/Mos.app"
+set vendorID to "Product ID: 0xc53f"                -- Replace with your mouse's product ID.
+set appName to "Scroll Reverser"                    -- Name of the application to launch.
+set appPath to "/Applications/Scroll Reverser.app"  -- Path to the application.
 
 -- Get a list of connected USB devices.
 try
