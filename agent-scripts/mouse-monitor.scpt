@@ -10,7 +10,7 @@
 --  replace the product ID with the product ID of your mouse.
 
 -- Path to your LaunchAgent.
-set agentPlist to POSIX path of (path to home folder) & "Library/LaunchAgents/local.user.MouseMonitor.plist"
+set agentPlist to POSIX path of (path to home folder) & "Library/LaunchAgents/local.StrangeRanger.MouseMonitor.plist"
 -- The USB vendor ID and app info.
 set vendorID to "Product ID: 0xc53f"
 set appName to "Mos"
