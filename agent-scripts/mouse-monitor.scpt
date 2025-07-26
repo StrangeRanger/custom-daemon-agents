@@ -9,22 +9,30 @@
 --  The product ID is specific to my mouse. If you want to use this script, you need to
 --  replace the product ID with the product ID of your mouse.
 
-set vendorID to "Product ID: 0xc53f"                -- Replace with your mouse's product ID.
-set appName to "Scroll Reverser"                    -- Name of the application to launch.
-set appPath to "/Applications/Scroll Reverser.app"  -- Path to the application.
+-- Path to your LaunchAgent.
+set agentPlist to POSIX path of (path to home folder) & "Library/LaunchAgents/local.user.MouseMonitor.plist"
+-- The USB vendor ID and app info.
+set vendorID to "Product ID: 0xc53f"
+set appName to "Scroll Reverser"
+set appPath to "/Applications/Scroll Reverser.app"
 
--- Get a list of connected USB devices.
 try
+    -- Get USB list from system_profiler.
 	set usbDevices to do shell script "system_profiler SPUSBDataType"
-on error errMsg
-	display dialog "Error fetching USB devices: " & errMsg buttons {"OK"} default button "OK"
-	return
+    -- Check if the vendor ID is present in the list.
+    if usbDevices contains vendorID then
+        -- Launch the application if it is not already running.
+        if not application appName is running then
+            do shell script "open " & quoted form of appPath
+        end if
+    end if
+on error errMsg number errNum
+    -- Display an error dialog if fetching USB devices fails.
+    display alert "Error in Mouse Monitor script" ¬
+        message errMsg & return & return & ¬
+        "The LaunchAgent will now be unloaded to prevent further retries." ¬
+        as warning buttons {"OK"} default button "OK"
+    -- Unload the agent so launchd stops trying to rerun it.
+    do shell script "launchctl unload " & quoted form of agentPlist
+    return
 end try
-
--- Check if the vendor ID is present in the list.
-if usbDevices contains vendorID then
-	-- Launch the application if it is not already running.
-	if not application appName is running then
-		do shell script "open " & quoted form of appPath
-	end if
-end if
