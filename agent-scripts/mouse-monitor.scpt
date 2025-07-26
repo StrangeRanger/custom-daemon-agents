@@ -13,8 +13,8 @@
 set agentPlist to POSIX path of (path to home folder) & "Library/LaunchAgents/local.user.MouseMonitor.plist"
 -- The USB vendor ID and app info.
 set vendorID to "Product ID: 0xc53f"
-set appName to "Scroll Reverser"
-set appPath to "/Applications/Scroll Reverser.app"
+set appName to "Mos"
+set appPath to "/Applications/Mos.app"
 
 try
     -- Get USB list from system_profiler.
