@@ -6,6 +6,7 @@
 --  application to run when I'm using my Logitech devices, so I use this script + an
 --  agent to launch the application when the mouse is connected.
 
+-- There shouldn't be a need to change the vendorID, appName, or appPath variables.
 set vendorID to "0x046d"
 set appName to "lghub"
 set appPath to "/Applications/lghub.app"
