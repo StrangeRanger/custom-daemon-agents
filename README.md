@@ -1,6 +1,6 @@
 # Custom Daemon Agents
 
-[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://wiki.hthompson.dev/en/project-tracker)
+[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://hthompson.dev/project-tracker#project-822761452) [![GitHub License](https://img.shields.io/github/license/StrangeRanger/custom-daemon-agents)](LICENSE)
 
 This repository contains the source code for custom Daemons and Agents created for macOS.
 
