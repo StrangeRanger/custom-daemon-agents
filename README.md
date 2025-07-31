@@ -1,6 +1,7 @@
 # Custom Daemon Agents
 
-[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://hthompson.dev/project-tracker#project-822761452) [![GitHub License](https://img.shields.io/github/license/StrangeRanger/custom-daemon-agents)](LICENSE)
+[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://hthompson.dev/project-tracker#project-822761452)
+[![GitHub License](https://img.shields.io/github/license/StrangeRanger/custom-daemon-agents)](LICENSE)
 
 A collection of custom macOS LaunchAgents and supporting scripts for automating user-level tasks. These agents are designed to run in the user's context, providing automation without requiring root privileges.
 
