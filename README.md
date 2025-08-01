@@ -46,7 +46,7 @@ The default directory `~/.agent-scripts/` ensures user-level scripts remain orga
     mkdir -p ~/.agent-scripts/
     cp agent-scripts/* ~/.agent-scripts/
     ```
-2. Copy the desired `.plist` file(s):
+2. Copy the desired `.plist` file(s) to `~/Library/LaunchAgents/`:
     ```bash
     cp launch-agents/local.StrangeRanger.LogitechMonitor.plist ~/Library/LaunchAgents/
     cp launch-agents/local.StrangeRanger.MouseMonitor.plist ~/Library/LaunchAgents/
