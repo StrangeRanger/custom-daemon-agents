@@ -1,78 +1,179 @@
-# Custom Daemon Agents
+# Custom macOS Daemons and Agents
 
 [![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://hthompson.dev/project-tracker#project-822761452)
 
-A collection of custom macOS LaunchAgents and supporting scripts for automating user-level tasks. These agents are designed to run in the user's context, providing automation without requiring root privileges.
+A collection of custom macOS LaunchAgents, LaunchDaemons, and supporting scripts for automating tasks.
+
+If you are unfamiliar with `launchd` jobs, they are part of macOS's unified service management framework. `launchd` is the system’s init process, responsible for starting, stopping, and managing jobs — including system daemons, user agents, applications, and scripts — based on configuration and triggers.
+
+If you are interested in learning more about `launchd`, daemons, agents, and related tools, check out the [Additional Resources](#additional-resources) section of this document.
 
 <details>
 <summary><strong>Table of Contents</strong></summary>
 
-- [Custom Daemon Agents](#custom-daemon-agents)
+- [Custom macOS Daemons and Agents](#custom-macos-daemons-and-agents)
   - [Directory Structure](#directory-structure)
-  - [User Agents](#user-agents)
+  - [Existing Agents and Daemons](#existing-agents-and-daemons)
+  - [Launch Agents](#launch-agents)
     - [How to Use](#how-to-use)
-      - [Notes](#notes)
-  - [System Daemons](#system-daemons)
+  - [Launch Daemons](#launch-daemons)
   - [Troubleshooting](#troubleshooting)
+  - [Additional Resources](#additional-resources)
+  - [Support and Issues](#support-and-issues)
   - [License](#license)
 
 </details>
 
-
 ## Directory Structure
+
+Below is a brief overview of the repository's directory structure, to help you understand its organization:
 
 ```
 custom-daemon-agents/
-├── agent-scripts/         # AppleScript and shell scripts executed by agents
-│   ├── logitech-monitor.scpt
-│   └── mouse-monitor.scpt
-├── launch-agents/         # User-level LaunchAgent .plist files
-│   ├── local.StrangeRanger.LogitechMonitor.plist
-│   └── local.StrangeRanger.MouseMonitor.plist
-├── LICENSE
-└── README.md
+├── agent-scripts/  # AppleScript and shell scripts executed by launchd jobs
+└── launch-agents/  # LaunchAgent plist files
 ```
 
-## User Agents
+## Existing Agents and Daemons
 
-These LaunchAgents start automatically upon login, running scripts within your user context (non-root).
+The table below lists the LaunchAgents, LaunchDaemons, and their associated scripts in this repository:
+
+| `launchd` Job | Associated Script | Type | Description |
+| ------------- | ----------------- | ---- | ----------- |
+| `local.StrangeRanger.LogitechMonitor` | `logitech-monitor.scpt` | LaunchAgent | Opens [Logitech G Hub](https://www.logitechg.com/en-us/innovation/g-hub.html) when a Logitech USB device (Vendor ID `0x046d`) is detected. |
+| `local.StrangeRanger.MouseMonitor` | `mouse-monitor.scpt` | LaunchAgent | Opens [Mos](https://mos.caldis.me/) when the configured mouse (by Product ID) is detected. |
+
+## Launch Agents
+
+These LaunchAgents start automatically upon login, running scripts within your user context.
 
 ### How to Use
 
-The default directory `~/.agent-scripts/` ensures user-level scripts remain organized and separate from system files.
-
-1. Create a directory to store the scripts executed by the agent:
+1. Create a directory for the scripts, then copy them into it:
     ```bash
     mkdir -p ~/.agent-scripts/
     cp agent-scripts/* ~/.agent-scripts/
     ```
-2. Copy the desired `.plist` file(s) to `~/Library/LaunchAgents/`:
+2. Copy the `.plist` files to `~/Library/LaunchAgents/`:
     ```bash
-    cp launch-agents/local.StrangeRanger.LogitechMonitor.plist ~/Library/LaunchAgents/
-    cp launch-agents/local.StrangeRanger.MouseMonitor.plist ~/Library/LaunchAgents/
+    cp launch-agents/* ~/Library/LaunchAgents/
     ```
-3. Load (enable) the agent(s) using `launchctl`:
+3. Replace `hunter` with your username in the `.plist` files:
     ```bash
-    launchctl load ~/Library/LaunchAgents/local.StrangeRanger.LogitechMonitor.plist
-    launchctl load ~/Library/LaunchAgents/local.StrangeRanger.MouseMonitor.plist
+    sed -i '' -e 's/\/Users\/hunter/\/Users\/YOUR_USERNAME/' ~/Library/LaunchAgents/<plist>
     ```
-4. If you use a different script directory, update the `ProgramArguments` path in the `.plist` file.
+4. Load and start the agent(s):
+    - Modern (recommended on recent macOS):
+        ```bash
+        # Load the job
+        launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/<plist>
+        # Enable the job
+        launchctl enable gui/$(id -u)/<Label>
+        # (Re)start the job
+        launchctl kickstart -k gui/$(id -u)/<Label>
+        ```
+   - Legacy (still works):
+     ```bash
+     launchctl load ~/Library/LaunchAgents/<plist>
+     ```
 
-#### Notes
+> [!NOTE]
+> - If you used a directory other than `~/.agent-scripts/`, update the `ProgramArguments` path(s) in the `.plist` file(s).
 
-- Scripts must be executable (`chmod +x ~/.agent-scripts/*`).
-- Paths in `.plist` files must match actual script locations.
+## Launch Daemons
 
-## System Daemons
-
-Currently, this repository contains only user-level agents, not system daemons (managed via `/Library/LaunchDaemons`).
+Currently, this repository does not contain any LaunchDaemons.
 
 ## Troubleshooting
 
-- After copying and loading a new agent, you may need to log out and back in for changes to take effect.
-- Use `launchctl list | grep StrangeRanger` to check agent status. If the agent is not listed, it may not have been loaded correctly.
-- Check `~/Library/Logs/` or `Console.app` for agent/script errors.
-- Ensure scripts are executable: `chmod +x ~/.agent-scripts/*`
+<details>
+<summary><strong>The agent is not listed or didn’t start — how can I check status?</strong></summary>
+
+> Use this to see if the job is loaded in your user domain:
+>
+> ```bash
+> launchctl list | grep StrangeRanger
+> ```
+>
+> If it’s not listed, load it using the steps in “How to Use.”
+
+</details>
+
+<details>
+<summary><strong>How can I inspect details for a specific agent?</strong></summary>
+
+> Print the runtime state and last exit status:
+>
+> ```bash
+> launchctl print gui/$(id -u)/local.StrangeRanger.MouseMonitor
+> launchctl print gui/$(id -u)/local.StrangeRanger.LogitechMonitor
+> ```
+
+</details>
+
+<details>
+<summary><strong>How do I unload, disable, or restart an agent?</strong></summary>
+
+> Modern commands:
+>
+> ```bash
+> # Stop/unload
+> launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/<plist>
+> # Disable so it won’t auto-start
+> launchctl disable gui/$(id -u)/<Label>
+> # (Re)start immediately
+> launchctl kickstart -k gui/$(id -u)/<Label>
+> ```
+>
+> Legacy alternative:
+>
+> ```bash
+> launchctl unload ~/Library/LaunchAgents/<plist>
+> launchctl load   ~/Library/LaunchAgents/<plist>
+> ```
+
+</details>
+
+<details>
+<summary><strong>Why am I seeing AppleScript alerts from these agents?</strong></summary>
+
+> On fatal error, the scripts show an AppleScript alert and then unload the agent to avoid retry loops. Because they run as LaunchAgents (in your user session), alerts are allowed. If you prefer non‑interactive behavior, remove the alert from the script(s) and log the error instead.
+
+</details>
+
+<details>
+<summary><strong>How do I find my device IDs (Vendor ID and Product ID)?</strong></summary>
+
+> List connected USB devices and filter for IDs:
+>
+> ```bash
+> system_profiler SPUSBDataType | grep -E "(Vendor ID|Product ID|Manufacturer)"
+> ```
+>
+> Look for lines such as:
+>
+> ```
+> Vendor ID: 0x1234 (Manufacturer Name)
+> Product ID: 0xabcd
+> ```
+>
+> Use those values to set the `vendorID` and/or `product ID` variables in the AppleScript(s) for your specific hardware.
+
+</details>
+
+## Additional Resources
+
+- Man pages: `man launchctl`, `man launchd.plist`
+- Apple documentation:
+  - [Script management with launchd in Terminal on Mac](https://support.apple.com/guide/terminal/script-management-with-launchd-apdc6c1077b-5d5d-4d35-9c19-60f2397b2369)
+  - [Creating Launch Daemons and Agents (Archived)](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html)
+- Third party tools/info:
+  - [LaunchControl](https://www.soma-zone.com/LaunchControl/) (tool)
+  - [What is launchd?](https://www.launchd.info/) (info)
+
+## Support and Issues
+
+Please use [GitHub Issues](https://github.com/StrangeRanger/custom-daemon-agents/issues) for bug reports and feature requests.
 
 ## License
 
