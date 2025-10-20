@@ -17,6 +17,7 @@ If you are interested in learning more about `launchd`, daemons, agents, and rel
   - [Launch Agents](#launch-agents)
     - [How to Use](#how-to-use)
   - [Launch Daemons](#launch-daemons)
+  - [Supported macOS Versions](#supported-macos-versions)
   - [Troubleshooting](#troubleshooting)
   - [Additional Resources](#additional-resources)
   - [Support and Issues](#support-and-issues)
@@ -83,6 +84,13 @@ These LaunchAgents start automatically upon login, running scripts within your u
 ## Launch Daemons
 
 Currently, this repository does not contain any LaunchDaemons.
+
+## Supported macOS Versions
+
+| macOS Version | Status | Notes |
+| --- | --- | --- |
+| macOS 26 | Supported |
+| <= macOS 15 | Unsupported | `SPUSBDataType` isn't available in macOS 26 and later. Use branch [15](https://github.com/StrangeRanger/custom-daemon-agents/tree/15) instead. |
 
 ## Troubleshooting
 
