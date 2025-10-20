@@ -1,10 +1,6 @@
 -- Description:
--- 	Check if a Logitech USB device, then launch the Logitech G Hub application if the
---  device is connected and the app is not already running.
--- Purpose:
---  Logitech G Hub is used to configure Logitech gaming peripherals. I only want the
---  application to run when I'm using my Logitech devices, so I use this script + an
---  agent to launch the application when the mouse is connected.
+-- 	Check if a Logitech USB device is connected, then launch Logitech G Hub, if not already
+--  running, when the device is detected.
 -- Note:
 --  There shouldn't be a need to change the vendorID, appName, or appPath variables.
 
