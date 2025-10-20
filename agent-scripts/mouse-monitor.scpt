@@ -17,22 +17,18 @@ set appName to "Mos"
 set appPath to "/Applications/Mos.app"
 
 try
-    -- Get USB list from system_profiler.
-	set usbDevices to do shell script "system_profiler SPUSBDataType"
-    -- Check if the vendor ID is present in the list.
+	set usbDevices to do shell script "system_profiler SPUSBHostDataType"
     if usbDevices contains vendorID then
-        -- Launch the application if it is not already running.
         if not application appName is running then
             do shell script "open " & quoted form of appPath
         end if
     end if
 on error errMsg number errNum
-    -- Display an error dialog if fetching USB devices fails.
     display alert "Error in Mouse Monitor script" ¬
         message errMsg & return & return & ¬
         "The LaunchAgent will now be unloaded to prevent further retries." ¬
         as warning buttons {"OK"} default button "OK"
-    -- Unload the agent so launchd stops trying to rerun it.
     do shell script "launchctl unload " & quoted form of agentPlist
     return
 end try
+
