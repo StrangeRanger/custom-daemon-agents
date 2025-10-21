@@ -17,6 +17,7 @@ If you are interested in learning more about `launchd`, daemons, agents, and rel
   - [Launch Agents](#launch-agents)
     - [How to Use](#how-to-use)
   - [Launch Daemons](#launch-daemons)
+  - [Supported macOS Versions](#supported-macos-versions)
   - [Troubleshooting](#troubleshooting)
   - [Additional Resources](#additional-resources)
   - [Support and Issues](#support-and-issues)
@@ -41,7 +42,7 @@ The table below lists the LaunchAgents, LaunchDaemons, and their associated scri
 | `launchd` Job | Associated Script | Type | Description |
 | ------------- | ----------------- | ---- | ----------- |
 | `local.StrangeRanger.LogitechMonitor` | `logitech-monitor.scpt` | LaunchAgent | Opens [Logitech G Hub](https://www.logitechg.com/en-us/innovation/g-hub.html) when a Logitech USB device (Vendor ID `0x046d`) is detected. |
-| `local.StrangeRanger.MouseMonitor` | `mouse-monitor.scpt` | LaunchAgent | Opens [Mos](https://mos.caldis.me/) when the configured mouse (by Product ID) is detected. |
+| `local.StrangeRanger.MouseMonitor` | `mouse-monitor.scpt` | LaunchAgent | Opens [LinearMouse](https://github.com/linearmouse/linearmouse) when the configured mouse (by Product ID) is detected. |
 
 ## Launch Agents
 
@@ -60,10 +61,10 @@ These LaunchAgents start automatically upon login, running scripts within your u
     ```
 3. Replace `hunter` with your username in the `.plist` files:
     ```bash
-    sed -i '' -e 's/\/Users\/hunter/\/Users\/YOUR_USERNAME/' ~/Library/LaunchAgents/<plist>
+    sed -i '' -e 's/\/Users\/hunter/\/Users\/YOUR_USERNAME/' ~/Library/LaunchAgents/PLIST_FILE.plist
     ```
 4. Load and start the agent(s):
-    - Modern (recommended on recent macOS):
+    - Modern (recommended on recent macOS versions):
         ```bash
         # Load the job
         launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/<plist>
@@ -83,6 +84,13 @@ These LaunchAgents start automatically upon login, running scripts within your u
 ## Launch Daemons
 
 Currently, this repository does not contain any LaunchDaemons.
+
+## Supported macOS Versions
+
+| macOS Version | Status | Notes |
+| --- | --- | --- |
+| macOS 26 | Supported | N/A |
+| ≤ macOS 15 | Unsupported | `SPUSBDataType` isn't available in macOS 26 and later. Use branch [15](https://github.com/StrangeRanger/custom-daemon-agents/tree/15) instead. |
 
 ## Troubleshooting
 
@@ -129,7 +137,7 @@ Currently, this repository does not contain any LaunchDaemons.
 >
 > ```bash
 > launchctl unload ~/Library/LaunchAgents/<plist>
-> launchctl load   ~/Library/LaunchAgents/<plist>
+> launchctl load ~/Library/LaunchAgents/<plist>
 > ```
 
 </details>
@@ -137,7 +145,7 @@ Currently, this repository does not contain any LaunchDaemons.
 <details>
 <summary><strong>Why am I seeing AppleScript alerts from these agents?</strong></summary>
 
-> On fatal error, the scripts show an AppleScript alert and then unload the agent to avoid retry loops. Because they run as LaunchAgents (in your user session), alerts are allowed. If you prefer non‑interactive behavior, remove the alert from the script(s) and log the error instead.
+> On fatal errors, the scripts show an AppleScript alert and then unloads the agent to avoid retry loops. Because they run as LaunchAgents (in your user session), alerts are allowed. If you prefer non‑interactive behavior, remove the alert from the script(s) and log the error instead.
 
 </details>
 
@@ -147,13 +155,13 @@ Currently, this repository does not contain any LaunchDaemons.
 > List connected USB devices and filter for IDs:
 >
 > ```bash
-> system_profiler SPUSBDataType | grep -E "(Vendor ID|Product ID|Manufacturer)"
+> system_profiler SPUSBHostDataType | grep -E "(Vendor ID|Product ID|Manufacturer)"
 > ```
 >
 > Look for lines such as:
 >
 > ```
-> Vendor ID: 0x1234 (Manufacturer Name)
+> Vendor ID: 0x1234
 > Product ID: 0xabcd
 > ```
 >
@@ -173,7 +181,7 @@ Currently, this repository does not contain any LaunchDaemons.
 
 ## Support and Issues
 
-Please use [GitHub Issues](https://github.com/StrangeRanger/custom-daemon-agents/issues) for bug reports and feature requests.
+Please use [GitHub Issues](https://github.com/StrangeRanger/custom-daemon-agents/issues) for bug reports.
 
 ## License
 
