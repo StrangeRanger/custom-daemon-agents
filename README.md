@@ -90,7 +90,7 @@ Currently, this repository does not contain any LaunchDaemons.
 | macOS Version | Status | Notes |
 | --- | --- | --- |
 | macOS 26 | Supported | N/A |
-| `<=` macOS 15 | Unsupported | `SPUSBDataType` isn't available in macOS 26 and later. Use branch [15](https://github.com/StrangeRanger/custom-daemon-agents/tree/15) instead. |
+| ≤ macOS 15 | Unsupported | `SPUSBDataType` isn't available in macOS 26 and later. Use branch [15](https://github.com/StrangeRanger/custom-daemon-agents/tree/15) instead. |
 
 ## Troubleshooting
 
