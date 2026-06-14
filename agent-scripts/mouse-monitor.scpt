@@ -1,20 +1,20 @@
 -- Description:
--- 	Check if a specific USB device is connected, then launch LinearMouse, if not already
---  running, when device is detected.
+-- 	Check if any connected HID mouse is connected, then launch LinearMouse, if not already
+--  running, when a mouse is detected.
 -- Note:
---  The product ID is specific to my mouse. If you want to use this script, you'll need to
---  replace the product ID with the one for your mouse.
+--  This checks the HID usage values for a mouse instead of matching a specific vendor or
+--  product ID, so it works across mouse manufacturers.
 
 -- Path to your LaunchAgent.
-set agentPlist to POSIX path of (path to home folder) & "Library/LaunchAgents/local.StrangeRanger.MouseMonitor.plist"
--- The USB vendor ID and app info.
-set vendorID to "Product ID: 0xc53f"
+set agentPlist to (do shell script "printf %s \"$HOME\"") & "/Library/LaunchAgents/local.StrangeRanger.MouseMonitor.plist"
+-- The shell command and app info.
+set mouseDetectionCommand to "ioreg -r -c IOHIDDevice -l | awk '/DeviceUsagePage/ && / = 1/ { page=1 } /DeviceUsage/ && !/DeviceUsagePage/ && / = 2/ { usage=1 } /^[ |]*\\+-o / { if (page && usage) found=1; page=0; usage=0 } END { if (page && usage) found=1; print found ? \"1\" : \"0\" }'"
 set appName to "LinearMouse"
 set appPath to "/Applications/LinearMouse.app"
 
 try
-	set usbDevices to do shell script "system_profiler SPUSBHostDataType"
-    if usbDevices contains vendorID then
+    set mouseConnected to do shell script mouseDetectionCommand
+    if mouseConnected is "1" then
         if not application appName is running then
             do shell script "open " & quoted form of appPath
         end if
@@ -27,4 +27,3 @@ on error errMsg number errNum
     do shell script "launchctl unload " & quoted form of agentPlist
     return
 end try
-
