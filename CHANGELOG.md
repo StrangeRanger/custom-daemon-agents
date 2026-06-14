@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [2026.6.14] – 2026‑06‑14
+
+### Changed
+
+- Updated `mouse-monitor.scpt` to detect any connected HID mouse instead of matching a single configured USB product ID, allowing LinearMouse to launch for mice from any manufacturer.
+
+### Fixed
+
+- Updated both monitor scripts to resolve the LaunchAgent plist path from `$HOME`, avoiding issues with AppleScript home-folder path coercion.
+
 ## [2025.10.21] – 2025‑10‑21
 
 *Changelog generated with GPT Codex*
@@ -86,7 +96,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 Initial release...
 
-[unreleased]: https://github.com/StrangeRanger/custom-daemon-agents/compare/2025.10.21...HEAD
+[unreleased]: https://github.com/StrangeRanger/custom-daemon-agents/compare/2026.6.14...HEAD
+[2026.6.14]: https://github.com/StrangeRanger/custom-daemon-agents/releases/tag/2026.6.14
 [2025.10.21]: https://github.com/StrangeRanger/custom-daemon-agents/releases/tag/2025.10.21
 [2025.8.10]: https://github.com/StrangeRanger/custom-daemon-agents/releases/tag/2025.8.10
 [2025.7.26]: https://github.com/StrangeRanger/custom-daemon-agents/releases/tag/2025.7.26
