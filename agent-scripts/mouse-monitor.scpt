@@ -1,5 +1,5 @@
 -- Description:
--- 	Check if any connected HID mouse is connected, then launch LinearMouse, if not already
+--  Check if any connected HID mouse is connected, then launch LinearMouse, if not already
 --  running, when a mouse is detected.
 -- Note:
 --  This checks the HID usage values for a mouse instead of matching a specific vendor or

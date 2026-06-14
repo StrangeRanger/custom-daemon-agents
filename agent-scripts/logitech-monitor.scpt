@@ -5,7 +5,7 @@
 --  There shouldn't be a need to change the vendorID, appName, or appPath variables.
 
 -- Path to your LaunchAgent.
-set agentPlist to POSIX path of (path to home folder) & "Library/LaunchAgents/local.StrangeRanger.LogitechMonitor.plist"
+set agentPlist to (do shell script "printf %s \"$HOME\"") & "/Library/LaunchAgents/local.StrangeRanger.LogitechMonitor.plist"
 -- The USB vendor ID and app info.
 set vendorID to "0x046d"
 set appName to "lghub"
@@ -26,4 +26,3 @@ on error errMsg number errNum
     do shell script "launchctl unload " & quoted form of agentPlist
 	return
 end try
-
