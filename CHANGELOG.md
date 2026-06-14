@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Updated `mouse-monitor.scpt` to detect any connected HID mouse instead of matching a single configured USB product ID, allowing LinearMouse to launch for mice from any manufacturer.
+- Updated `mouse-monitor.scpt` to detect any connected external HID mouse with `hidutil list` instead of matching a single configured USB product ID, allowing LinearMouse to launch for mice from any manufacturer, including receivers connected through USB hubs or dongles.
 
 ### Fixed
 

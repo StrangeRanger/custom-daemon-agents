@@ -4,11 +4,12 @@
 -- Note:
 --  This checks the HID usage values for a mouse instead of matching a specific vendor or
 --  product ID, so it works across mouse manufacturers.
+--  Built-in pointing devices are ignored so this only reacts to a connected external mouse.
 
 -- Path to your LaunchAgent.
 set agentPlist to (do shell script "printf %s \"$HOME\"") & "/Library/LaunchAgents/local.StrangeRanger.MouseMonitor.plist"
 -- The shell command and app info.
-set mouseDetectionCommand to "ioreg -r -c IOHIDDevice -l | awk '/DeviceUsagePage/ && / = 1/ { page=1 } /DeviceUsage/ && !/DeviceUsagePage/ && / = 2/ { usage=1 } /^[ |]*\\+-o / { if (page && usage) found=1; page=0; usage=0 } END { if (page && usage) found=1; print found ? \"1\" : \"0\" }'"
+set mouseDetectionCommand to "hidutil list | awk 'NR > 2 && $4 == 1 && $5 == 2 && $NF == 0 { found=1 } END { print found ? \"1\" : \"0\" }'"
 set appName to "LinearMouse"
 set appPath to "/Applications/LinearMouse.app"
 
